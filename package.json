@@ -1,0 +1,22 @@
+{
+  "name": "grafos-test",
+  "version": "1.0.0",
+  "description": "client where a user can drawing to grafo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IvanVilla1585/grafos.git"
+  },
+  "keywords": [
+    "grafos"
+  ],
+  "author": "Ivan Dario Villa Ramirez <trezeguet55@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IvanVilla1585/grafos/issues"
+  },
+  "homepage": "https://github.com/IvanVilla1585/grafos#readme"
+}
