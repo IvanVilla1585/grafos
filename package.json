@@ -4,7 +4,9 @@
   "description": "client where a user can drawing to grafo",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "standard",
+    "bundle": "webpack --config webpack.config.js",
+    "start": "node server/index.js"
   },
   "repository": {
     "type": "git",
@@ -18,5 +20,20 @@
   "bugs": {
     "url": "https://github.com/IvanVilla1585/grafos/issues"
   },
-  "homepage": "https://github.com/IvanVilla1585/grafos#readme"
+  "homepage": "https://github.com/IvanVilla1585/grafos#readme",
+  "dependencies": {
+    "bootstrap": "^4.1.1",
+    "d3": "^4.3.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "css-loader": "^0.28.11",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "standard": "^11.0.1",
+    "style-loader": "^0.21.0",
+    "webpack": "^4.7.0",
+    "webpack-cli": "^2.1.2"
+  }
 }

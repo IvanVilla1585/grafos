@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <title>Document</title>
+  </head>
+  <body>
+    <header class="page-header text-center">
+      <h1>Grafos <small>Subtext for header</small></h1>
+    </header>
+    <section class="layout">
+      <div class="row container-buttons">
+        <button id="create" type="button" class="buttons btn btn-primary btn-lg">Crear Grafo</button>
+        <button id="save" type="button" class="buttons btn btn-primary btn-lg">Guardar Grafo</button>
+        <button id="cancel" type="button" class="buttons btn btn-primary btn-lg">Cancelar</button>
+      </div>
+      <div class="row">
+        <article class="col-md-12" id="graph">
+          <canvas width="1380" height="500"></canvas>
+        </article>
+      </div>
+      <div class="row container-buttons margin-top">
+        <button id="matriz" type="button" class="buttons btn btn-primary btn-lg">Matriz</button>
+        <button type="button" class="buttons btn btn-primary btn-lg">Isomosfico</button>
+      </div>
+      <div class="row container-results">
+        <div class="row">
+          <article class="col-md-6">
+            <h3>Matriz de adyacencia</h3>
+            <div id="container-matriz-a">
+              <table class="table">
+                <thead id="t-head">
+
+                </thead>
+                <tbody id="t-body">
+
+                </tbody>
+              </table>
+            </div>
+          </article>
+          <article class="col-md-6">
+            <h3>Matriz de adyacencia</h3>
+            <div id="container-matriz-b">
+
+            </div>
+          </article>
+        </div>
+        <div class="row">
+          <article class="col-md-6 text-center">
+            <div class="panel panel-default">
+              <!-- Default panel contents -->
+              <div class="panel-heading color-blue">
+                <h3>Panel heading</h3>
+              </div>
+              <!-- Table -->
+              <table class="table">
+                <thead>
+                <tr class="text-center">
+                  <th>TIPO DE GRAFO</th>
+                  <th>SI</th>
+                  <th>NO</th>
+                  <th>RESULTADO NEGATIVO</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>ISOMORFOS</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    <script src="js/app.bundle.js"></script>
+  </body>
+</html>
