@@ -11,13 +11,26 @@
   </head>
   <body>
     <header class="page-header text-center">
-      <h1>Grafos <small>Subtext for header</small></h1>
+      <h1>Grafos</h1>
     </header>
     <section class="layout">
-      <div class="row container-buttons">
-        <button id="create" type="button" class="buttons btn btn-primary btn-lg">Crear Grafo</button>
-        <button id="save" type="button" class="buttons btn btn-primary btn-lg">Guardar Grafo</button>
-        <button id="cancel" type="button" class="buttons btn btn-primary btn-lg">Cancelar</button>
+      <div class="row">
+        <div class="col-md-6">
+          <!--<h3 class="margin-none">Tipo de grafo</h3>-->
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="addressed" name="addressed" class="custom-control-input" value="addressed">
+            <label class="custom-control-label" for="addressed">Grafo dirigido</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="not_addressed" name="addressed" class="custom-control-input" value="not_addressed">
+            <label class="custom-control-label" for="not_addressed">Grafo no dirigido</label>
+          </div>
+        </div>
+        <div class="col-md-6 container-buttons text-right">
+          <button id="create" type="button" class="buttons btn btn-primary btn-lg">Crear Grafo</button>
+          <button id="save" type="button" class="buttons btn btn-primary btn-lg">Guardar Grafo</button>
+          <button id="cancel" type="button" class="buttons btn btn-primary btn-lg">Cancelar</button>
+        </div>
       </div>
       <div class="row">
         <article class="col-md-12" id="graph">
@@ -26,58 +39,36 @@
       </div>
       <div class="row container-buttons margin-top">
         <button id="matriz" type="button" class="buttons btn btn-primary btn-lg">Matriz</button>
-        <button type="button" class="buttons btn btn-primary btn-lg">Isomosfico</button>
+        <button id="isomorphic" type="button" class="buttons btn btn-primary btn-lg">Isomorfo</button>
+        <button id="addressedB" type="button" class="buttons btn btn-primary btn-lg">Conexo</button>
+        <button id="strong-addressed" type="button" class="buttons btn btn-primary btn-lg">Fuerte. Conexo</button>
+        <button id="regular" type="button" class="buttons btn btn-primary btn-lg">Regular</button>
+        <button id="complete" type="button" class="buttons btn btn-primary btn-lg">Completo</button>
       </div>
       <div class="row container-results">
         <div class="row">
-          <article class="col-md-6">
-            <h3>Matriz de adyacencia</h3>
-            <div id="container-matriz-a">
-              <table class="table">
-                <thead id="t-head">
-
-                </thead>
-                <tbody id="t-body">
-
-                </tbody>
-              </table>
-            </div>
-          </article>
-          <article class="col-md-6">
-            <h3>Matriz de adyacencia</h3>
-            <div id="container-matriz-b">
-
-            </div>
-          </article>
+          <h2 class="text-center">Matricez de Adyacencia</h2>
+          <div id="matriz-container" class="row"></div>
         </div>
         <div class="row">
-          <article class="col-md-6 text-center">
-            <div class="panel panel-default">
-              <!-- Default panel contents -->
-              <div class="panel-heading color-blue">
-                <h3>Panel heading</h3>
-              </div>
-              <!-- Table -->
-              <table class="table">
-                <thead>
-                <tr class="text-center">
-                  <th>TIPO DE GRAFO</th>
-                  <th>SI</th>
-                  <th>NO</th>
-                  <th>RESULTADO NEGATIVO</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                  <td>ISOMORFOS</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-          </article>
+          <h2 class="text-center">Grafos Isomorfos</h2>
+          <div id="isomorphic-container" class="row"></div>
+        </div>
+        <div class="row">
+          <h2 class="text-center">Grafos Conexos</h2>
+          <div id="addressed-container" class="row text-center"></div>
+        </div>
+        <div class="row">
+          <h2 class="text-center">Grafos Fuertemente Conexos</h2>
+          <div id="strong-container" class="row text-center"></div>
+        </div>
+        <div class="row">
+          <h2 class="text-center">Grafos Regulares</h2>
+          <div id="regular-container" class="row text-center"></div>
+        </div>
+        <div class="row">
+          <h2 class="text-center">Grafos Completos</h2>
+          <div id="complete-container" class="row text-center"></div>
         </div>
       </div>
     </section>
