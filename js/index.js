@@ -1,10 +1,10 @@
 'use strict'
 
 import Canvas from './Canvas'
-import HandlerButtons from './HandlerButtons'
+import HandleButtons from './HandleButtons'
 
 const canvas = new Canvas()
-const handlers = new HandlerButtons(canvas)
+const handle = new HandleButtons(canvas)
 
 canvas.setupCanvas()
-handlers.setupHandlers()
+handle.setupHandlers()
