@@ -55,12 +55,9 @@ class HandlerButtons {
       keys.map(_key => {
         const graph = graphs[_key]
         let {circles, links, matriz} = graph
-        for (let i = 0; i < circles.length; i++) {
-          matriz[i] = []
-          for (let j = 0; j < circles.length; j++) {
-            matriz[i][j] = 0
-          }
-        }
+        circles.map((_, index) => {
+          matriz[index] = circles.map(_ => 0)
+        })
 
         links.map(link => {
           const source = circles.findIndex(_c => _c.id === link.source)
@@ -90,8 +87,6 @@ class HandlerButtons {
       if (store.getIsCreating()) {
         return message.info('Primero debe guardar el grafo que esta creando para poder crear otro')
       }
-      console.log(this.$ratioAddressed.checked)
-      console.log(this.$ratioNotAddressed.checked)
       const key = `${store.baseName}${store.getlastGraph()}`
       const graph = {
         name: `Grafo ${store.getlastGraph()}`,
@@ -146,7 +141,6 @@ class HandlerButtons {
         const template = templateTableIsomorphic(data[_k])
         this.$isomorphicContainer.insertAdjacentHTML('beforeEnd', template)
       })
-      console.dir(data)
     })
   }
 
@@ -252,10 +246,10 @@ class HandlerButtons {
               `
             }
           } else {
-            message = 'Cada nodo debe tener como minimo una arista de entrada y otra de salida.'
+            message = '<h3>Cada nodo debe tener como minimo una arista de entrada y otra de salida.</h3>'
           }
         } else {
-          message = 'No se puede verificar si es un grafo fuertemente conexo, por que no es un grafo conexo.'
+          message = '<h3>No se puede verificar si es un grafo fuertemente conexo, por que no es un grafo conexo.</h3>'
         }
         this.$strongContainer.insertAdjacentHTML('beforeEnd', message)
       })
