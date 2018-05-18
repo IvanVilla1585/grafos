@@ -4,10 +4,10 @@ import * as d3 from 'd3'
 import uuid from 'uuid/v4'
 
 import store from './utils/store'
-import messages from "./utils/messages";
+import messages from './utils/messages'
 
 class Canvas {
-  constructor() {
+  constructor () {
     this.radius = 32
     this.colors = []
     this.node_from = null
@@ -16,11 +16,11 @@ class Canvas {
     this.height = this.canvas.property('height')
     this.context = this.canvas.node().getContext('2d')
   }
-  
-  setupCanvas() {
+  setupCanvas () {
     this.canvas
       .on('mousedown', this.handleMouseDown.bind(this))
-      .on('keydown', this.handleDelete.bind(this))
+    d3.select(window)
+      .on('keyup', this.handleDelete.bind(this))
 
     this.colors = d3.scaleOrdinal()
       .range(d3.schemeCategory20)
@@ -33,14 +33,14 @@ class Canvas {
       .on('start.render drag.render end.render', this.render.bind(this)))
   }
 
-  render() {
+  render () {
     this.clear()
     const data = this.mergeData()
     this.drawLines(data.links, data.circles)
     this.drawCircles(data.circles)
   }
 
-  mergeData() {
+  mergeData () {
     let circles = []
     let links = []
     const currentGraph = store.getCurrentGraph()
@@ -57,7 +57,7 @@ class Canvas {
     return {circles, links}
   }
 
-  drawCircles(circles) {
+  drawCircles (circles) {
     circles.map(circle => {
       this.context.beginPath()
       this.context.moveTo(circle.x + this.radius, circle.y)
@@ -67,7 +67,7 @@ class Canvas {
       this.context.font = 'bold 22px sans-serif'
       this.context.fillStyle = '#fff'
       this.context.fillText(
-        circle.text ,
+        circle.text,
         circle.text.toString().length > 1 ? circle.x - 12 : circle.x - 6,
         circle.y + 6
       )
@@ -81,20 +81,24 @@ class Canvas {
     })
   }
 
-  drawLines(links, circles) {
+  drawLines (links, circles) {
     links.map(link => {
       this.context.beginPath()
       this.context.lineWidth = 3
       const source = circles.find(_c => _c.id === link.source)
       const target = circles.find(_c => _c.id === link.target)
-      this.context.moveTo(
-        source.x,
-        source.y
-      )
-      this.context.lineTo(
-        target.x,
-        target.y
-      )
+      if (link.source === link.target) {
+        this.drawCycle(source)
+      } else {
+        this.context.moveTo(
+          source.x,
+          source.y
+        )
+        this.context.lineTo(
+          target.x,
+          target.y
+        )
+      }
       if (store.graphType === 'addressed') {
         this.drawArrow(source, target, 14)
       }
@@ -103,41 +107,47 @@ class Canvas {
     })
   }
 
-  drawArrow(source, target, headLength) {
-    const degreesInRadians225 = 225 * Math.PI / 180;
-    const degreesInRadians135 = 135 * Math.PI / 180;
+  drawArrow (source, target, headLength) {
+    const degreesInRadians225 = 225 * Math.PI / 180
+    const degreesInRadians135 = 135 * Math.PI / 180
 
     // calc the angle of the line
-    const dx = target.x - source.x;
-    const dy = target.y - source.y;
-    const angle = Math.atan2(dy,dx);
+    const dx = target.x - source.x
+    const dy = target.y - source.y
+    const angle = Math.atan2(dy, dx)
 
     // calc the position in x and y
     const posX = target.x - this.radius * Math.cos(angle)
     const posY = target.y - this.radius * Math.sin(angle)
 
     // calc the arrow position in x and y
-    const x225 = posX + headLength * Math.cos(angle + degreesInRadians225);
-    const y225 = posY + headLength * Math.sin(angle + degreesInRadians225);
-    const x135 = posX + headLength * Math.cos(angle + degreesInRadians135);
-    const y135 = posY + headLength * Math.sin(angle + degreesInRadians135);
+    const x225 = posX + headLength * Math.cos(angle + degreesInRadians225)
+    const y225 = posY + headLength * Math.sin(angle + degreesInRadians225)
+    const x135 = posX + headLength * Math.cos(angle + degreesInRadians135)
+    const y135 = posY + headLength * Math.sin(angle + degreesInRadians135)
 
     // draw partial arrowhead at 225 degrees
-    this.context.moveTo(posX, posY);
-    this.context.lineTo(x225, y225);
+    this.context.moveTo(posX, posY)
+    this.context.lineTo(x225, y225)
     // draw partial arrowhead at 135 degrees
-    this.context.moveTo(posX, posY);
-    this.context.lineTo(x135, y135);
+    this.context.moveTo(posX, posY)
+    this.context.lineTo(x135, y135)
   }
 
-  drawCicle(data) {
-    this.context.beginPath();
-    this.context.moveTo(data.x, data.y);
-    this.context.quadraticCurveTo(data.x - this.radius, 80, 50, data.x - this.radius);
-    this.context.stroke();
+  drawCycle (data) {
+    this.context.beginPath()
+    this.context.moveTo(data.x, data.y)
+    this.context.lineTo(data.x - 60, data.y)
+    this.context.moveTo(data.x, data.y + 15)
+    this.context.lineTo(data.x - 60, data.y + 15)
+    this.context.moveTo(data.x - 60, data.y)
+    this.context.lineTo(data.x - 60, data.y + 15)
+    // this.context.bezierCurveTo(data.x, data.y + 100, 30, data.x - 100, data.x, data.y)
+    // this.context.quadraticCurveTo(data.x, data.x + 60, data.x - 30, data.y)
+    this.context.stroke()
   }
 
-  dragsubject() {
+  dragsubject () {
     if (store.getIsCreating()) {
       let dx = -1
       let dy = -1
@@ -160,13 +170,12 @@ class Canvas {
     }
   }
 
-  dragstarted() {
-    debugger
+  dragstarted () {
     this.resolverEvent()
     d3.event.subject.active = true
   }
 
-  resolverEvent() {
+  resolverEvent () {
     const currentGraph = store.getCurrentGraph()
     const graph = store.getGrap(currentGraph)
     const current = d3.event.subject
@@ -192,30 +201,29 @@ class Canvas {
     }
   }
 
-  dragged() {
+  dragged () {
     d3.event.subject.x = d3.event.x
     d3.event.subject.y = d3.event.y
   }
 
-  dragended() {
+  dragended () {
     d3.event.subject.active = false
   }
 
-  handleMouseDown() {
+  handleMouseDown () {
     if (store.getIsCreating()) {
       if (d3.event.altKey) {
         this.createCircle()
       }
-    } else if (d3.event.altKey && !store.getIsCreating()){
+    } else if (d3.event.altKey && !store.getIsCreating()) {
       messages.info('Debe iniciar la creacion de un grafo')
     }
   }
 
-  createCircle() {
+  createCircle () {
     const currentGraph = store.getCurrentGraph()
     const graph = store.getGrap(currentGraph)
     const lastChild = store.getLastChild()
-    debugger
     const circle = {
       index: graph.circles.length ? graph.circles.length - 1 : 0,
       x: d3.event.x,
@@ -230,13 +238,36 @@ class Canvas {
     this.render()
   }
 
-  clear() {
+  clear () {
     this.context.clearRect(0, 0, this.width, this.height)
   }
 
-  handleDelete() {
-    debugger
-    console.log(d3.event)
+  handleDelete () {
+    const currentGraph = store.getCurrentGraph()
+    const graph = store.getGrap(currentGraph)
+    if (this.node_from && d3.event.keyCode === 8) {
+      graph.circles = graph.circles.filter(_c => _c.id !== this.node_from.id)
+      graph.links = graph.links.filter(_l => _l.source !== this.node_from.id && _l.target !== this.node_from.id)
+      console.log(d3.event)
+      store.setGrap(currentGraph, graph)
+      this.node_from = null
+      this.render()
+    } else if (this.node_from && (d3.event.keyCode === 67 || d3.event.keyCode === 99)) {
+      const link = {
+        source: this.node_from.id,
+        target: this.node_from.id
+      }
+      graph.links.push(link)
+      this.node_from.selected = false
+      graph.circles = graph.circles.map(_c => {
+        if (_c.id === this.node_from.id) {
+          return this.node_from
+        }
+        return _c
+      })
+      this.node_from = null
+      this.render()
+    }
   }
 }
 
