@@ -3,10 +3,10 @@
 import toastr from 'toastr'
 
 const messages = {
-  success(msg) {
+  success (msg) {
     toastr.success(msg)
   },
-  info(msg) {
+  info (msg) {
     toastr.info(msg)
   }
 }
