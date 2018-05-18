@@ -2,14 +2,13 @@
 
 import store from './utils/store'
 import message from './utils/messages'
-import FloydWarshall from 'floyd-warshall'
 import {templateTableIsomorphic, templateTableMatriz} from './utils/templates'
-import {countGrades, isomorphic} from "./utils/rules/isomorphic";
-import {addressed, complete, regular, validAddressed} from "./utils/rules/related";
-import {countSourceTargetGrades, strong} from "./utils/rules/strong-addressed";
+import {isomorphic} from './utils/rules/isomorphic'
+import {addressed, complete, regular, validAddressed} from './utils/rules/related'
+import {countSourceTargetGrades, strong} from './utils/rules/strong-addressed'
 
 class HandlerButtons {
-  constructor(canvas) {
+  constructor (canvas) {
     this.matriz = []
     this.canvas = canvas
     this.$buttonSave = document.getElementById('save')
@@ -31,7 +30,7 @@ class HandlerButtons {
     this.$isomorphicContainer = document.getElementById('isomorphic-container')
   }
 
-  setupHandlers() {
+  setupHandlers () {
     this.handleSave()
     this.handleCancel()
     this.handleMatriz()
@@ -45,7 +44,7 @@ class HandlerButtons {
     this.handleRadioOption(this.$ratioNotAddressed)
   }
 
-  handleMatriz() {
+  handleMatriz () {
     this.$buttonMatriz.addEventListener('click', (e) => {
       const graphs = store.getGraps()
       const keys = Object.keys(graphs)
@@ -83,7 +82,7 @@ class HandlerButtons {
     })
   }
 
-  handleCreate() {
+  handleCreate () {
     this.$buttonCreate.addEventListener('click', (e) => {
       if (!this.$ratioAddressed.checked && !this.$ratioNotAddressed.checked) {
         return message.info('Seleccione el tipo de grafo a crear')
@@ -106,22 +105,22 @@ class HandlerButtons {
     })
   }
 
-  handleSave() {
+  handleSave () {
     this.$buttonSave.addEventListener('click', () => {
       const currentGraph = store.getCurrentGraph()
       const graph = store.getGrap(currentGraph)
-      if (store.getIsCreating() && graph.circles.length) {
+      if (store.getIsCreating()) {
         store.setIsCreating()
         store.setLastChild(0)
         store.incrementGraph()
         message.success(`Se creo el digrafo ${graph.name}`)
       } else {
-        message.info('El grafo debe contener al menos un vertice')
+        message.info('El grafo debe contener al menos un vértice')
       }
     })
   }
 
-  handleCancel() {
+  handleCancel () {
     this.$buttonCancel.addEventListener('click', () => {
       store.resetValues()
       this.canvas.clear()
@@ -131,7 +130,7 @@ class HandlerButtons {
     })
   }
 
-  handleIsomorphic() {
+  handleIsomorphic () {
     this.$buttonIsomorphic.addEventListener('click', () => {
       const graphs = store.getGraps()
       const keys = Object.keys(graphs)
@@ -151,7 +150,7 @@ class HandlerButtons {
     })
   }
 
-  handleRegular() {
+  handleRegular () {
     this.$buttonRegular.addEventListener('click', () => {
       const graphs = store.getGraps()
       const keys = Object.keys(graphs)
@@ -163,16 +162,16 @@ class HandlerButtons {
         let message = ''
         const result = regular(graphs[_k])
         if (result) {
-          message = `<h3>El grafo ${graphs[_k].name} es un grafo regular por que todos sus vertices tiene el mismo grado</h3>`
+          message = `<h3>El grafo ${graphs[_k].name} es un grafo regular por que todos sus vértices tiene el mismo grado</h3>`
         } else {
-          message = `<h3>El grafo ${graphs[_k].name} no es un grafo regular por que todos sus vertices no tiene el mismo grado</h3>`
+          message = `<h3>El grafo ${graphs[_k].name} no es un grafo regular por que todos sus vértices no tiene el mismo grado</h3>`
         }
         this.$regularContainer.insertAdjacentHTML('beforeEnd', message)
       })
     })
   }
 
-  handleComplete() {
+  handleComplete () {
     this.$buttonComplete.addEventListener('click', () => {
       const graphs = store.getGraps()
       const keys = Object.keys(graphs)
@@ -193,7 +192,7 @@ class HandlerButtons {
     })
   }
 
-  handleAddressed() {
+  handleAddressed () {
     this.$buttonAddressed.addEventListener('click', () => {
       const graphs = store.getGraps()
       const keys = Object.keys(graphs)
@@ -209,17 +208,16 @@ class HandlerButtons {
         addressed(0, graphs[_k].matriz, visited)
         const result = validAddressed(visited)
         if (result) {
-          message = `<h3>El grafo ${graphs[_k].name} es un grafo conexo por que puede ir desde un vertice a otro.</h3>`
+          message = `<h3>El grafo ${graphs[_k].name} es un grafo conexo por que puede ir desde un vértice a otro.</h3>`
         } else {
-          message = `<h3>El grafo ${graphs[_k].name} no es un grafo conexo por que puede ir desde un vertice a otro.</h3>`
+          message = `<h3>El grafo ${graphs[_k].name} no es un grafo conexo por que puede ir desde un vértice a otro.</h3>`
         }
-        debugger
         this.$addressedContainer.insertAdjacentHTML('beforeEnd', message)
       })
     })
   }
 
-  handleStrongAddressed() {
+  handleStrongAddressed () {
     this.$buttonStrongAddressed.addEventListener('click', () => {
       const graphs = store.getGraps()
       const keys = Object.keys(graphs)
@@ -229,7 +227,6 @@ class HandlerButtons {
       this.$strongContainer.innerHTML = ''
       keys.map(_k => {
         let message = ''
-        debugger
         const visited = graphs[_k].circles.map(() => {
           return false
         })
@@ -247,11 +244,11 @@ class HandlerButtons {
             const _d = strong(graphs[_k])
             if (_d) {
               message = `<h3>El grafo ${graphs[_k].name} es un grafo fuertemente conexo por que puede ir desde cualquiera de sus 
-                ${graphs[_k].circles.length} vertices a otro vertice.</h3>
+                ${graphs[_k].circles.length} vértices a otro vértice.</h3>
               `
             } else {
               message = `<h3>El grafo ${graphs[_k].name} no es un grafo fuertemente conexo por que no puede ir desde cualquiera de sus 
-                ${graphs[_k].circles.length} vertices a otro vertice.</h3>
+                ${graphs[_k].circles.length} vértices a otro vértice.</h3>
               `
             }
           } else {
@@ -265,7 +262,7 @@ class HandlerButtons {
     })
   }
 
-  handleRadioOption(component) {
+  handleRadioOption (component) {
     component.addEventListener('click', (e) => {
       if (e.target.checked) {
         store.graphType = e.target.value
