@@ -1,7 +1,7 @@
 'use strict'
 
 const path = require('path')
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   mode: 'development',
@@ -21,7 +21,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: "css-loader",
+        loader: 'css-loader',
         options: {
           root: '/public/css'
         }
@@ -33,6 +33,6 @@ module.exports = {
       filename: 'app.bundle.css',
       allChunks: true,
       publicPath: path.resolve(__dirname, 'public/css')
-    }),
+    })
   ]
 }
