@@ -21,17 +21,17 @@ export const templateTableIsomorphic = (data) => {
   return template
 }
 
-function isomorphicTable(graph) {
+function isomorphicTable (graph) {
   const _h = graph.circles.map(_c => {
     return `<th>${_c.text}</th>`
   })
   const head = `
-    <thead className="t-head text-center">
+    <thead className='t-head text-center'>
     <tr>
-      <th rowSpan="2">${graph.name}</th>
-      <th rowSpan="2">N</th>
-      <th rowSpan="2">A</th>
-      <th colSpan="2">Grado</th>
+      <th rowSpan='2'>${graph.name}</th>
+      <th rowSpan='2'>N</th>
+      <th rowSpan='2'>A</th>
+      <th colSpan='2'>Grado</th>
     </tr>
     <tr>
       ${_h.join('')}
@@ -62,10 +62,10 @@ function isomorphicTable(graph) {
   return table
 }
 
-function table(circles, matriz) {
+function table (circles, matriz) {
   let tbody = ''
   let head = `
-    <tr class="text-center">
+    <tr class='text-center'>
     </tr>`
 
   matriz.map(_data => {
