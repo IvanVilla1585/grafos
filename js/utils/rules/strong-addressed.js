@@ -1,7 +1,7 @@
 
-import FloydWarshall from "floyd-warshall";
+import FloydWarshall from 'floyd-warshall'
 
-export function strong(graph) {
+export function strong (graph) {
   let valid = true
   const warshal = new FloydWarshall(graph.matriz)
   const result = warshal.widestPaths
@@ -17,7 +17,7 @@ export function strong(graph) {
   return valid
 }
 
-export function countSourceTargetGrades(links, circles) {
+export function countSourceTargetGrades (links, circles) {
   const data = circles.map(_circle => {
     const _entries = links.filter(_link => _link.source === _circle.id)
     const _targets = links.filter(_link => _link.target === _circle.id)
