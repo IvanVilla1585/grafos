@@ -5,49 +5,49 @@ const store = {
   lastGraph: 1,
   lastChild: 0,
   graphType: '',
-  baseName: 'graph_',
+  baseName: 'graph',
   currentGraph: '',
   isCreating: false,
   isSaving: false,
-  getGraps() {
+  getGraps () {
     return {...this.graphs}
   },
-  getGrap(key) {
+  getGrap (key) {
     return this.graphs[key]
   },
-  setGrap(key, data) {
+  setGrap (key, data) {
     this.graphs[key] = data
   },
-  setCurrentGraph(graph) {
+  setCurrentGraph (graph) {
     this.currentGraph = graph
   },
-  getCurrentGraph() {
+  getCurrentGraph  () {
     return this.currentGraph
   },
-  getlastGraph() {
+  getlastGraph () {
     return this.lastGraph
   },
-  incrementGraph() {
+  incrementGraph () {
     this.lastGraph += 1
   },
-  decrementGraph() {
+  decrementGraph () {
     this.lastGraph -= 1
   },
-  setIsCreating() {
+  setIsCreating () {
     this.isCreating = !this.isCreating
   },
-  getIsCreating() {
+  getIsCreating () {
     return this.isCreating
   },
-  setLastChild(value) {
+  setLastChild (value) {
     this.lastChild = value
   },
-  getLastChild() {
+  getLastChild () {
     return this.lastChild
   },
-  resetValues() {
+  resetValues () {
     this.graphs = {}
-    this.lastGraph = 1,
+    this.lastGraph = 1
     this.lastChild = 0
     this.currentGraph = ''
     this.isCreating = false
